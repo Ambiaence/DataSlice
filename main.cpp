@@ -1,7 +1,9 @@
 #include <iostream>
 
 int main() {
-	__int32_t whole = 0x01020304;  
+	std::cout << sizeof(unsigned int) << '\n';
+		
+	unsigned int whole = 0xA1A2A3A4;  
 	//Variable method - Not dynamic
 	unsigned char a = (whole & 0xFF000000) >> 24;
 	unsigned char b = (whole & 0x00FF0000) >> 16;
@@ -13,6 +15,13 @@ int main() {
 	unsigned char* bP = ((unsigned char*) &whole) + 2;
 	unsigned char* cP = ((unsigned char*) &whole) + 1;
 	unsigned char* dP = (unsigned char*) &whole + 0;
+
+	//Variable with arithmetic. Cross platform.
+
+	unsigned char aA = whole%0x100;
+	unsigned char bA = (whole/0x100) % 0x100; //universal
+	unsigned char cA = (whole/0x10000)% 0x100; //universal
+	unsigned char dA = whole/0x1000000; //Assumes 32 bit integer
 
 	//error: cannot bind non-const lvalue reference of type ‘unsigned char&’ to a value of type ‘__int32_t’ {aka ‘int’}
 	//unsigned char& aRef = whole;
@@ -31,5 +40,11 @@ int main() {
 	std::cout << "A Pointer: " << (int) *aP << '\n';
 	std::cout << "B Pointer: " << (int) *bP << '\n';
 	std::cout << "C Pointer: " << (int) *cP << '\n';
-	std::cout << "D Pointer: " << (int) *dP << '\n';
+	std::cout << "D Pointer: " << (int) *dP << "\n\n";
+
+	std::cout << "Now with arithmetic" << '\n';
+	std::cout << "A Arithmetic: " << (int) aA << '\n';
+	std::cout << "B Arithmetic: " << (int) bA << '\n';
+	std::cout << "C Arithmetic: " << (int) cA << '\n';
+	std::cout << "D Arithmetic: " << (int) dA << "\n";
 }
